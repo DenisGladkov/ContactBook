@@ -3,26 +3,34 @@ package com.gladkov.javaphonebook.model;
 public class Contact {
 
     private String name;
-    private int phonenumber;
+    private int age;
 
-    public Contact(String name, int phonenumber) {
+    public Contact(String name, int phoneNumber) {
         this.name = name;
-        this.phonenumber = phonenumber;
+        this.age = phoneNumber;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getPhonenumber() {
-        return phonenumber;
+    public int getAge() {
+        return age;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setPhonenumber(int phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

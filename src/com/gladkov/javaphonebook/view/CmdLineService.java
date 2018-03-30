@@ -1,5 +1,7 @@
 package com.gladkov.javaphonebook.view;
 
-public interface CmdLineService {
-    void showMenu();
+import java.io.IOException;
+
+public interface CmdLineService{
+    void runMenu() throws IOException;
 }
