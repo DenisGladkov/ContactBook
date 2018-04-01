@@ -36,7 +36,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     public void showContact() {
-        this.contactList.size();
+        System.out.println(this.contactList.size());
         for (Contact contact : this.contactList) {
             System.out.println(contact);
         }
