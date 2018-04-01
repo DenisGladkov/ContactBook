@@ -1,5 +1,8 @@
 package com.gladkov.javaphonebook.services.impl;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +24,22 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void deleteContact() {
+    public void deleteContact(int index) throws IOException{
 
+
+        this.contactList.remove(index);
+
+        System.out.println("after remove: ");
+        for (Contact contact : this.contactList) {
+            System.out.println(contact);
+        }
+    }
+
+    public void showContact() {
+        this.contactList.size();
+        for (Contact contact : this.contactList) {
+            System.out.println(contact);
+        }
     }
 }
+
