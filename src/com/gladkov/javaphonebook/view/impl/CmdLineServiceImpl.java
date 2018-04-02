@@ -56,8 +56,13 @@ public class CmdLineServiceImpl implements CmdLineService {
         System.out.println("Enter name");
         String name = br.readLine();
         System.out.println("Enter age");
-        int age = Integer.parseInt(br.readLine());
-        this.contactService.createContact(name, age);
+        try {
+            int age = Integer.parseInt(br.readLine());
+            this.contactService.createContact(name, age);
+        }
+        catch (NumberFormatException ex){
+            System.out.println("Incorrect input!");
+        }
     }
 
     private void deleteContact() throws IOException {

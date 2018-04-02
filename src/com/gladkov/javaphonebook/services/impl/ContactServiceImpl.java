@@ -29,14 +29,15 @@ public class ContactServiceImpl implements ContactService {
 
         this.contactList.remove(index);
 
-        System.out.println("after remove: ");
+        System.out.println("after remove: "+this.contactList.size());
         for (Contact contact : this.contactList) {
             System.out.println(contact);
         }
     }
 
     public void showContact() {
-        System.out.println(this.contactList.size());
+
+        System.out.println("Size of collection: "+this.contactList.size());
         for (Contact contact : this.contactList) {
             System.out.println(contact);
         }
