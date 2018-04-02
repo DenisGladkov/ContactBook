@@ -66,10 +66,15 @@ public class CmdLineServiceImpl implements CmdLineService {
     }
 
     private void deleteContact() throws IOException {
-        System.out.println("Enter index");
-        String line = br.readLine();
-        int index = Integer.parseInt(line);
-        this.contactService.deleteContact(index);
+        try {
+            System.out.println("Enter index");
+            String line = br.readLine();
+            int index = Integer.parseInt(line);
+            this.contactService.deleteContact(index);
+        }
+        catch(IndexOutOfBoundsException ex){
+            System.out.println("Выход за пределы массива. Возможно, коллекция пуста?");
+        }
     }
 
     private void showContact(){
