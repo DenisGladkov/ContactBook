@@ -16,31 +16,20 @@ public class ContactServiceImpl implements ContactService {
     @Override
     public void createContact(String name, int age) {
         this.contactList.add(new Contact(name, age));
-
-        for (Contact contact : this.contactList) {
-            System.out.println(contact);
-        }
-
     }
 
     @Override
-    public void deleteContact(int index) throws IOException{
-
-
-        this.contactList.remove(index);
-
-        System.out.println("after remove: "+this.contactList.size());
-        for (Contact contact : this.contactList) {
-            System.out.println(contact);
-        }
+    public void deleteContact(String name) throws IOException{
+            this.contactList.remove(name);
     }
 
     public void showContact() {
-
         System.out.println("Size of collection: "+this.contactList.size());
         for (Contact contact : this.contactList) {
             System.out.println(contact);
         }
     }
+
 }
+
 

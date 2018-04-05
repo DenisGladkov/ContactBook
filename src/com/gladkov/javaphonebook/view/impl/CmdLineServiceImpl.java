@@ -1,5 +1,6 @@
 package com.gladkov.javaphonebook.view.impl;
 
+import com.gladkov.javaphonebook.model.Contact;
 import com.gladkov.javaphonebook.services.ContactService;
 import com.gladkov.javaphonebook.view.CmdLineService;
 import java.io.BufferedReader;
@@ -9,8 +10,7 @@ import java.io.InputStreamReader;
 public class CmdLineServiceImpl implements CmdLineService {
 
     private ContactService contactService;
-    private BufferedReader br =
-            new BufferedReader(new InputStreamReader(System.in));
+    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
     public CmdLineServiceImpl(ContactService contactService) {
         this.contactService = contactService;
@@ -62,15 +62,18 @@ public class CmdLineServiceImpl implements CmdLineService {
         }
         catch (NumberFormatException ex){
             System.out.println("Incorrect input!");
+            System.out.println("Enter age");
+            int age = Integer.parseInt(br.readLine());
+            this.contactService.createContact(name, age);
         }
     }
 
     private void deleteContact() throws IOException {
         try {
             System.out.println("Enter index");
-            String line = br.readLine();
-            int index = Integer.parseInt(line);
-            this.contactService.deleteContact(index);
+            String name = br.readLine();
+            if()
+            this.contactService.deleteContact(name);
         }
         catch(IndexOutOfBoundsException ex){
             System.out.println("Выход за пределы массива. Возможно, коллекция пуста?");
