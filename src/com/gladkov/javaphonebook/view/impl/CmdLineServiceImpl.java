@@ -16,10 +16,9 @@ public class CmdLineServiceImpl implements CmdLineService {
         this.contactService = contactService;
     }
 
-    @Override
     public void runMenu() throws IOException {
-        boolean isRunning = true;
-        while (isRunning) {
+        boolean exit = true;
+        while (exit) {
             showMenu();
             String line = br.readLine();
             switch (line) {
@@ -32,11 +31,15 @@ public class CmdLineServiceImpl implements CmdLineService {
                     break;
                 }
                 case "3": {
-                    showContact();
+                    showContacts();
+                    break;
+                }
+                case "4": {
+                    editContact();
                     break;
                 }
                 case "0": {
-                    isRunning = false;
+                    exit = false;
                     break;
                 }
                 default:
@@ -48,39 +51,59 @@ public class CmdLineServiceImpl implements CmdLineService {
     private static void showMenu() {
         System.out.println("1. Create Contact");
         System.out.println("2. Delete Contact");
-        System.out.println("3. Show contactList");
+        System.out.println("3. Show Contacts");
+        System.out.println("4. Edit Contact");
         System.out.println("0. Exit");
     }
 
     private void createContact() throws IOException {
         System.out.println("Enter name");
         String name = br.readLine();
-        System.out.println("Enter age");
-        try {
-            int age = Integer.parseInt(br.readLine());
-            this.contactService.createContact(name, age);
-        }
-        catch (NumberFormatException ex){
-            System.out.println("Incorrect input!");
-            System.out.println("Enter age");
-            int age = Integer.parseInt(br.readLine());
-            this.contactService.createContact(name, age);
-        }
+        int ageN = readInt();
+        this.contactService.createContact(name, ageN);
     }
 
     private void deleteContact() throws IOException {
+        System.out.println("Enter name");
+        String name = br.readLine();
+        this.contactService.deleteContact(name);
+    }
+
+    private void showContacts() {
+        this.contactService.showContacts();
+    }
+
+    private void editContact() throws IOException {
+
+        System.out.println("Enter name of modified contact");
+        String name = br.readLine();
+
+        System.out.println("Enter name");
+        String newname = br.readLine();
+
+        System.out.println("Enter age of modified contact");
+        String age = br.readLine();
+        System.out.println("Enter age");
+        String newage = br.readLine();
+        int newa = new Integer(newage);
+        this.contactService.editContact(name, newname, newa);
+    }
+
+    private int readInt() throws IOException {
+        int i;
         try {
-            System.out.println("Enter index");
-            String name = br.readLine();
-            if()
-            this.contactService.deleteContact(name);
+            System.out.println("Input number!");
+            String line = this.br.readLine();
+            i = new Integer(line);
         }
-        catch(IndexOutOfBoundsException ex){
-            System.out.println("Выход за пределы массива. Возможно, коллекция пуста?");
+        catch (NumberFormatException ex) {
+            System.out.println("Wrong Input!");
+            return readInt();
         }
+        return i;
     }
 
     private void showContact(){
-        this.contactService.showContact();
+        this.contactService.showContacts();
     }
 }
