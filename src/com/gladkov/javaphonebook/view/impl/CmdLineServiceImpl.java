@@ -103,7 +103,5 @@ public class CmdLineServiceImpl implements CmdLineService {
         return i;
     }
 
-    private void showContact(){
-        this.contactService.showContacts();
-    }
+
 }
