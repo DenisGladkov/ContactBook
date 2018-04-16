@@ -2,6 +2,7 @@ package com.gladkov.javaphonebook.view.impl;
 
 import com.gladkov.javaphonebook.model.Contact;
 import com.gladkov.javaphonebook.services.ContactService;
+import com.gladkov.javaphonebook.util.ValidationUtil;
 import com.gladkov.javaphonebook.view.CmdLineService;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,13 +10,19 @@ import java.io.InputStreamReader;
 
 public class CmdLineServiceImpl implements CmdLineService {
 
-    private ContactService contactService;
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    /**
+     * Сервис реализующий логику предоставления и считывания информации в/из консоль.
+     */
+
+    private final ContactService contactService;
+    private final BufferedReader br;
 
     public CmdLineServiceImpl(ContactService contactService) {
         this.contactService = contactService;
+        this.br = new BufferedReader(new InputStreamReader(System.in));
     }
 
+    @Override
     public void runMenu() throws IOException {
         boolean exit = true;
         while (exit) {
@@ -57,20 +64,24 @@ public class CmdLineServiceImpl implements CmdLineService {
     }
 
     private void createContact() throws IOException {
+
         System.out.println("Enter name");
         String name = br.readLine();
-        int ageN = readInt();
-        this.contactService.createContact(name, ageN);
+
+        System.out.println("Enter age");
+        int age = readInt();
+        contactService.createContact(name, age);
     }
 
     private void deleteContact() throws IOException {
-        System.out.println("Enter name");
+        System.out.println("Enter contact name for remove");
         String name = br.readLine();
-        this.contactService.deleteContact(name);
+
+        contactService.deleteContact(name);
     }
 
     private void showContacts() {
-        this.contactService.showContacts();
+        contactService.showContacts();
     }
 
     private void editContact() throws IOException {
@@ -78,30 +89,22 @@ public class CmdLineServiceImpl implements CmdLineService {
         System.out.println("Enter name of modified contact");
         String name = br.readLine();
 
-        System.out.println("Enter name");
-        String newname = br.readLine();
+        System.out.println("Enter new name");
+        String newName = br.readLine();
 
-        System.out.println("Enter age of modified contact");
-        String age = br.readLine();
-        System.out.println("Enter age");
-        String newage = br.readLine();
-        int newa = new Integer(newage);
-        this.contactService.editContact(name, newname, newa);
+        System.out.println("Enter new age");
+        int newAge = readInt();
+
+        this.contactService.editContact(name, newName, newAge);
     }
 
     private int readInt() throws IOException {
-        int i;
         try {
-            System.out.println("Input number!");
-            String line = this.br.readLine();
-            i = new Integer(line);
-        }
-        catch (NumberFormatException ex) {
-            System.out.println("Wrong Input!");
+            String line = br.readLine();
+            return ValidationUtil.checkNumber(line);
+        } catch (NumberFormatException ex) {
+            System.out.println("Wrong Input! You must input number");
             return readInt();
         }
-        return i;
     }
-
-
 }
