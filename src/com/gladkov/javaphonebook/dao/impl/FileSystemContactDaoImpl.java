@@ -21,9 +21,12 @@ public class FileSystemContactDaoImpl implements ContactDao {
     @Override
     public void saveContact(Contact contact) {
         try (PrintWriter writer = new PrintWriter(
-                new BufferedWriter(new FileWriter(FILE))); StandardOpenOption.APPEND;) {
+                new OutputStreamWriter(new FileOutputStream(FILE, true)) {
+                    @Override
+                    public void write(int b) throws IOException { }
+                })) {
             writer.println(contact);
-            writer.append('\n'+"d");
+            writer.flush();
 
         } catch (IOException e) {
             e.printStackTrace();
