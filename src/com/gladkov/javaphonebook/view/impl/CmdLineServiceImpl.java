@@ -74,10 +74,12 @@ public class CmdLineServiceImpl implements CmdLineService {
     }
 
     private void deleteContact() throws IOException {
-        System.out.println("Enter contact name for remove");
-        String name = br.readLine();
-
-        contactService.deleteContact(name);
+        System.out.println("Enter ID");
+        int id = readInt();
+        if(id > 0) {
+            contactService.removeContact(id);
+        } else System.out.println("Wrong input!");
+    }
     }
 
     private void showContacts() {

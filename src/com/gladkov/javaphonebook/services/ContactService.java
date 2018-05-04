@@ -1,5 +1,10 @@
 package com.gladkov.javaphonebook.services;
 
+import com.gladkov.javaphonebook.model.Contact;
+import javafx.collections.ObservableList;
+
+import java.io.IOException;
+
 public interface ContactService {
 
     /**
@@ -8,9 +13,9 @@ public interface ContactService {
 
     void createContact(String name, int phone);
 
-    void deleteContact(String name);
+    public void removeContact(int id);
 
-    void showContacts();
+    ObservableList<Contact> showContacts();
 
     void editContact(String oldName, String newName, int newAge);
 

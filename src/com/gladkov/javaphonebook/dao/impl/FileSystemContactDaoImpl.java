@@ -5,6 +5,8 @@ import com.gladkov.javaphonebook.model.Contact;
 
 import java.io.*;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileSystemContactDaoImpl implements ContactDao {
 
@@ -21,33 +23,36 @@ public class FileSystemContactDaoImpl implements ContactDao {
     @Override
     public void saveContact(Contact contact) {
         try (PrintWriter writer = new PrintWriter(
-                new OutputStreamWriter(new FileOutputStream(FILE, true)) {
-                    @Override
-                    public void write(int b) throws IOException { }
-                })) {
+                new BufferedWriter(new FileWriter(FILE)))) {
             writer.println(contact);
             writer.flush();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void removeContact() {
+    public void removeContact(int id) {
 
     }
 
     @Override
-    public void showAll() {
+    public void editContact(Contact contact) {
+
+    }
+
+
+    @Override
+    public List<Contact> showAll() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
-
+            return new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
+            return new ArrayList<>();
         }
     }
 }
