@@ -9,31 +9,44 @@ public class Contact {
      */
 
     private String name;
-    private int age;
+    private String phoneNumber;
+    private int id;
 
-    public Contact(String name, int phoneNumber) {
+    public Contact(String name, String phoneNumber, int id) {
         this.name = name;
-        this.age = phoneNumber;
+        this.phoneNumber = phoneNumber;
+        this.id=id;
+
+    }
+
+    public Contact(String name, String phoneNumber) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getAge() {
-        return age;
+    public String getPhone() {
+        return phoneNumber;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setPhone(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
+
 
     @Override
     public String toString() {
-        return name + ":" + age;
+        return id + ":" + name + ":" + phoneNumber;
     }
 }

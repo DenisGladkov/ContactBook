@@ -12,11 +12,11 @@ public interface ContactDao {
      * (файловая система, БД и т.д.)
      */
 
-    void saveContact(Contact contact);
+    void saveContact(String name, String phoneNumber);
 
-    public void removeContact(int id);
+    void removeContact(int id);
 
-    public void editContact(Contact contact);
+    void editContact(Contact contact);
 
     List<Contact> showAll();
 }

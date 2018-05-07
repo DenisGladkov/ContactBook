@@ -22,7 +22,7 @@ public class DBContactDao implements ContactDao {
         }
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              Statement st = connection.createStatement()) {
-            st.execute("CREATE TABLE IF NOT  EXISTS CLIENT(ID INT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255), AGE INT);");
+            st.execute("CREATE TABLE IF NOT  EXISTS CLIENT(ID INT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255), PHONENUMBER VARCHAR(255));");
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -31,13 +31,13 @@ public class DBContactDao implements ContactDao {
     }
 
     @Override
-    public void saveContact(Contact contact) {
+    public void saveContact(String name, String phoneNumber) {
         try (Connection connection = DriverManager
                 .getConnection(DB_URL, USER, PASSWORD);
-             PreparedStatement st = connection.prepareStatement("INSERT INTO CLIENT(NAME, AGE) VALUES(?, ?);")) {
+             PreparedStatement st = connection.prepareStatement("INSERT INTO CLIENT(NAME, PHONENUMBER) VALUES(?, ?);")) {
 
-            st.setString(1, contact.getName());
-            st.setInt(2, contact.getAge());
+            st.setString(1, name);
+            st.setString(2, phoneNumber);
 
             st.execute();
         }
@@ -55,7 +55,7 @@ public class DBContactDao implements ContactDao {
              PreparedStatement st =
                      connection.prepareStatement("DELETE FROM CLIENT WHERE ID = ?;")){
 
-            st.setLong(1, id);
+            st.setInt(1, id);
 
             st.execute();
         } catch (SQLException e) {
@@ -72,7 +72,7 @@ public class DBContactDao implements ContactDao {
                              "UPDATE CLIENT SET NAME = ?,  AGE = ?")){
 
             st.setString(1, contact.getName());
-            st.setInt(3, contact.getAge());
+            st.setString(2, contact.getPhone());
 
             st.execute();
         } catch (SQLException e) {
@@ -80,16 +80,18 @@ public class DBContactDao implements ContactDao {
         }
     }
 
+
+
     @Override
-    public List<Contact> showAll() {
+    /*public List<Contact> showAll() {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              Statement st = connection.createStatement()) {
             List<Contact> clients = new ArrayList<>();
             try (ResultSet resultSet = st.executeQuery("SELECT * FROM CLIENT;")) {
                 while (resultSet.next()) {
                     String name = resultSet.getString("name");
-                    int age = resultSet.getInt("age");
-                    clients.add(new Contact(name, age));
+                    String phoneNumber = resultSet.getString("phoneNumber");
+                    clients.add(new Contact(name, phoneNumber));
                 }
             }
             return clients;
@@ -98,6 +100,6 @@ public class DBContactDao implements ContactDao {
             e.printStackTrace();
             return new ArrayList<>();
         }
-    }
+    }*/
 }
 

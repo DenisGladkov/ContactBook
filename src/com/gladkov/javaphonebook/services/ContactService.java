@@ -11,12 +11,12 @@ public interface ContactService {
      * Сервис бизнес логики который описывает основные действия над доменными моделями - Контактами.
      */
 
-    void createContact(String name, int phone);
+    void createContact(String name, String phoneNumber);
 
     public void removeContact(int id);
 
     ObservableList<Contact> showContacts();
 
-    void editContact(String oldName, String newName, int newAge);
+    void editContact(int id, String name, String phoneNumber);
 
 }

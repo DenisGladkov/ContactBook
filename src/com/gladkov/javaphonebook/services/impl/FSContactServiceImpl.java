@@ -22,10 +22,15 @@ public class FSContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void createContact(String name, int phone) {
-        contactDao.saveContact(new Contact(name, phone));
+    public void createContact(String name, String phoneNumber) {
+        contactDao.saveContact(new Contact(name, phoneNumber));
         showContacts();
     }
+
+    @Override
+    //public void removeContact(int id) {
+
+   // }
 
     @Override
     public void deleteContact(String name) {

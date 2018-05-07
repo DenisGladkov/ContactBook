@@ -23,8 +23,8 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void createContact(String name, int phone) {
-        contactList.add(new Contact(name, phone));
+    public void createContact(String name, String phoneNumber) {
+        contactList.add(new Contact(name, phoneNumber));
     }
 
     @Override
@@ -38,10 +38,15 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void editContact(String name, String newName, int newAge) {
-//        Contact contact = contactList.get(name);
-//        contact.setName(newName);
-//        contact.setAge(newAge);
+    public void editContact(int id, String name, String phoneNumber) {
+        for (Contact contact : contactList.values()) {
+            if (contact.getId() == id){
+                contact.setName(name);
+                contact.setPhone(phoneNumber);
+
+                return;
+            }
+        }
     }
 }
 

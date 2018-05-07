@@ -88,16 +88,20 @@ public class CmdLineServiceImpl implements CmdLineService {
 
     private void editContact() throws IOException {
 
-        System.out.println("Enter name of modified contact");
-        String name = br.readLine();
+        System.out.println("Enter ID");
+        int id = readInt();
+        if(id > 0) {
+            String name = readName();
+            String phoneNumber = readPhoneNumber();
+            int age = readAge();
+            String address = readAddress();
 
-        System.out.println("Enter new name");
-        String newName = br.readLine();
-
-        System.out.println("Enter new age");
-        int newAge = readInt();
-
-        this.contactService.editContact(name, newName, newAge);
+            if (!name.isEmpty() && !phoneNumber.isEmpty() && age >= MIN_AGE && age <= MAX_AGE ) {
+                contactService.editContact(id, name, age);
+            } else {
+                System.out.println("Wrong input!");
+            }
+        } else System.out.println("Wrong input!");
     }
 
     private int readInt() throws IOException {
