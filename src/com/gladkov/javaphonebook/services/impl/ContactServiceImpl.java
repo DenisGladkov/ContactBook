@@ -39,7 +39,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void editContact(int id, String name, String phoneNumber) {
-        for (Contact contact : contactList.values()) {
+        /*for (Contact contact : contactList.v) {
             if (contact.getId() == id){
                 contact.setName(name);
                 contact.setPhone(phoneNumber);
@@ -47,7 +47,8 @@ public class ContactServiceImpl implements ContactService {
                 return;
             }
         }
-    }
+    }*/
+}
 }
 
 

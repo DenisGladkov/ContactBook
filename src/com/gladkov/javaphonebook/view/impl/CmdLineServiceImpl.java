@@ -34,7 +34,7 @@ public class CmdLineServiceImpl implements CmdLineService {
                     break;
                 }
                 case "2": {
-                    deleteContact();
+                    removeContact();
                     break;
                 }
                 case "3": {
@@ -68,19 +68,30 @@ public class CmdLineServiceImpl implements CmdLineService {
         System.out.println("Enter name");
         String name = br.readLine();
 
-        System.out.println("Enter age");
-        int age = readInt();
-        contactService.createContact(name, age);
+        System.out.println("Enter number of phone");
+        String phoneNumber= br.readLine();
+        contactService.createContact(name, phoneNumber);
     }
 
-    private void deleteContact() throws IOException {
+    private void removeContact() {
         System.out.println("Enter ID");
-        int id = readInt();
+        int number;
+        try {
+            System.out.println("Input number!");
+            String line = br.readLine();
+            return ValidationUtil.checkNumber(line);
+        }
+        catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    int id = readInt();
         if(id > 0) {
             contactService.removeContact(id);
         } else System.out.println("Wrong input!");
     }
-    }
+
 
     private void showContacts() {
         contactService.showContacts();
@@ -88,7 +99,7 @@ public class CmdLineServiceImpl implements CmdLineService {
 
     private void editContact() throws IOException {
 
-        System.out.println("Enter ID");
+       /* System.out.println("Enter ID");
         int id = readInt();
         if(id > 0) {
             String name = readName();
@@ -112,5 +123,6 @@ public class CmdLineServiceImpl implements CmdLineService {
             System.out.println("Wrong Input! You must input number");
             return readInt();
         }
-    }
+    }*/
+}
 }

@@ -4,8 +4,6 @@ import com.gladkov.javaphonebook.dao.ContactDao;
 import com.gladkov.javaphonebook.model.Contact;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class DBContactDao implements ContactDao {
 
@@ -83,8 +81,8 @@ public class DBContactDao implements ContactDao {
 
 
     @Override
-    /*public List<Contact> showAll() {
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+    public void showAll() {
+        /*try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              Statement st = connection.createStatement()) {
             List<Contact> clients = new ArrayList<>();
             try (ResultSet resultSet = st.executeQuery("SELECT * FROM CLIENT;")) {
@@ -101,5 +99,6 @@ public class DBContactDao implements ContactDao {
             return new ArrayList<>();
         }
     }*/
+}
 }
 

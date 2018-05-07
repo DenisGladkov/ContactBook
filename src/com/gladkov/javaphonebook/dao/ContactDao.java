@@ -2,9 +2,6 @@ package com.gladkov.javaphonebook.dao;
 
 import com.gladkov.javaphonebook.model.Contact;
 
-import java.io.IOException;
-import java.util.List;
-
 public interface ContactDao {
 
     /**
@@ -18,5 +15,5 @@ public interface ContactDao {
 
     void editContact(Contact contact);
 
-    List<Contact> showAll();
+    void showAll();
 }

@@ -23,18 +23,12 @@ public class FSContactServiceImpl implements ContactService {
 
     @Override
     public void createContact(String name, String phoneNumber) {
-        contactDao.saveContact(new Contact(name, phoneNumber));
-        showContacts();
+        contactDao.saveContact(name, phoneNumber);
     }
 
     @Override
-    //public void removeContact(int id) {
-
-   // }
-
-    @Override
-    public void deleteContact(String name) {
-//		this.contactList.remove(name);
+    public void removeContact(int id) {
+        contactDao.removeContact(id);
     }
 
     @Override
@@ -44,7 +38,7 @@ public class FSContactServiceImpl implements ContactService {
         return list;
     }
 
-    public void editContact(String name, String newName, int newAge) {
+    public void editContact(int id, String name, String phoneNumber) {
 //		Contact contact = this.contactList.get(name);
 //		contact.setName(newName);
 //		contact.setAge(newAge);

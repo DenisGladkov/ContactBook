@@ -4,9 +4,7 @@ import com.gladkov.javaphonebook.dao.ContactDao;
 import com.gladkov.javaphonebook.model.Contact;
 
 import java.io.*;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.List;
 
 public class FileSystemContactDaoImpl implements ContactDao {
 
@@ -43,7 +41,7 @@ public class FileSystemContactDaoImpl implements ContactDao {
 
 
     @Override
-    public List<Contact> showAll() {
+    public void showAll() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {
