@@ -10,18 +10,12 @@ public class Contact {
 
     private String name;
     private String phoneNumber;
-    private int id;
+    private int age;
 
-    public Contact(String name, String phoneNumber, int id) {
+    public Contact(String name, String phoneNumber, Integer age) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.id=id;
-
-    }
-
-    public Contact(String name, String phoneNumber) {
-        this.name = name;
-        this.phoneNumber = phoneNumber;
+        this.age= this.age;
     }
 
     public String getName() {
@@ -32,8 +26,8 @@ public class Contact {
         return phoneNumber;
     }
 
-    public int getId() {
-        return id;
+    public int getAge() {
+        return age;
     }
 
     public void setName(String name) {
@@ -47,6 +41,6 @@ public class Contact {
 
     @Override
     public String toString() {
-        return id + ":" + name + ":" + phoneNumber;
+        return  name + ":" + age + ":" +phoneNumber;
     }
 }

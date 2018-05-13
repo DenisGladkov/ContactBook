@@ -1,9 +1,6 @@
 package com.gladkov.javaphonebook.services.impl;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.gladkov.javaphonebook.model.Contact;
 import com.gladkov.javaphonebook.services.ContactService;
 import javafx.collections.FXCollections;
@@ -24,7 +21,7 @@ public class ContactServiceImpl implements ContactService {
 
     @Override
     public void createContact(String name, String phoneNumber) {
-        contactList.add(new Contact(name, phoneNumber));
+        contactList.add(new Contact(name, phoneNumber, age));
     }
 
     @Override

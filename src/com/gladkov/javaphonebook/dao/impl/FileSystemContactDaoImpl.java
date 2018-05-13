@@ -5,8 +5,9 @@ import com.gladkov.javaphonebook.model.Contact;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
-public class FileSystemContactDaoImpl implements ContactDao {
+public abstract class FileSystemContactDaoImpl implements ContactDao {
 
     /**
      * Сервис работы с файловой системой. Преобразует модели в/из данные хранимые на жестком диске.
@@ -29,19 +30,19 @@ public class FileSystemContactDaoImpl implements ContactDao {
         }
     }
 
-    @Override
+
     public void removeContact(int id) {
 
     }
 
-    @Override
+
     public void editContact(Contact contact) {
 
     }
 
 
     @Override
-    public void showAll() {
+    public List<Contact> showAll() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE))) {
             String line;
             while ((line = reader.readLine()) != null) {

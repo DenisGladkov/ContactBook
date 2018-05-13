@@ -74,12 +74,13 @@ public class CmdLineServiceImpl implements CmdLineService {
     }
 
     private void removeContact() {
-        System.out.println("Enter ID");
-        int number;
         try {
-            System.out.println("Input number!");
-            String line = br.readLine();
-            return ValidationUtil.checkNumber(line);
+            System.out.println("Enter ID");
+            String id = br.readLine();
+            if(id > 0) {
+                contactService.removeContact(id);
+            } else System.out.println("Wrong input!");
+        }
         }
         catch (NumberFormatException e) {
             return -1;
@@ -87,10 +88,7 @@ public class CmdLineServiceImpl implements CmdLineService {
     }
 
     int id = readInt();
-        if(id > 0) {
-            contactService.removeContact(id);
-        } else System.out.println("Wrong input!");
-    }
+
 
 
     private void showContacts() {

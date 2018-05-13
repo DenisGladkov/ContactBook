@@ -4,6 +4,8 @@ import com.gladkov.javaphonebook.dao.ContactDao;
 import com.gladkov.javaphonebook.model.Contact;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBContactDao implements ContactDao {
 
@@ -11,94 +13,84 @@ public class DBContactDao implements ContactDao {
     private static final String USER = "Test";
     private static final String PASSWORD = "";
 
+    private int counter = 0;
+
     public DBContactDao() {
-        try {
-            Class.forName("org.h2.Driver");
-        }
-        catch (ClassNotFoundException e) {
-            System.out.println("Can't connect to DB");
-        }
+        //DeleteDbFiles.execute("~", "test", true);
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              Statement st = connection.createStatement()) {
-            st.execute("CREATE TABLE IF NOT  EXISTS CLIENT(ID INT AUTO_INCREMENT PRIMARY KEY, NAME VARCHAR(255), PHONENUMBER VARCHAR(255));");
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void saveContact(String name, String phoneNumber) {
-        try (Connection connection = DriverManager
-                .getConnection(DB_URL, USER, PASSWORD);
-             PreparedStatement st = connection.prepareStatement("INSERT INTO CLIENT(NAME, PHONENUMBER) VALUES(?, ?);")) {
-
-            st.setString(1, name);
-            st.setString(2, phoneNumber);
-
-            st.execute();
-        }
-        catch (SQLException e) {
-            e.printStackTrace();
+            st.execute("CREATE TABLE CLIENT(ID INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                    "   SURNAME VARCHAR(255),NAME VARCHAR(255),PHONENUMBER VARCHAR(255),AGE INTEGER);");
+        } catch (SQLException e) {
+            System.err.println("Something went wrong while initialisation " + e);
         }
     }
 
-
-
     @Override
-    public void removeContact(int id) {
-        try (Connection connection = DriverManager
-                .getConnection(DB_URL, USER, PASSWORD);
-             PreparedStatement st =
-                     connection.prepareStatement("DELETE FROM CLIENT WHERE ID = ?;")){
+    public void saveContact(Contact contact) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+             PreparedStatement st = connection.prepareStatement("INSERT INTO CLIENT VALUES(?, ?, ?);")) {
 
-            st.setInt(1, id);
+            st.setInt(1, counter++);
+            st.setString(2, contact.getName());
+            st.setString(3, contact.getPhone());
+            st.setInt(4, contact.getAge());
 
             st.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Something went wrong when saving contact " + e);
         }
+
     }
 
-
-    public void editContact(Contact contact){
-        try (Connection connection = DriverManager
-                .getConnection(DB_URL, USER, PASSWORD);
-             PreparedStatement st =
-                     connection.prepareStatement(
-                             "UPDATE CLIENT SET NAME = ?,  AGE = ?")){
+    @Override
+    public void editContact(String oldName, Contact contact) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+             PreparedStatement st = connection
+                     .prepareStatement("UPDATE CLIENT SET NAME=?, PHONENUMBER=?, AGE=? WHERE NAME=?")) {
 
             st.setString(1, contact.getName());
             st.setString(2, contact.getPhone());
+            st.setInt(3, contact.getAge());
+            st.setString(4, oldName);
 
             st.execute();
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("Something went wrong when updating contact " + e);
+        }
+
+    }
+
+    @Override
+    public void removeContact(String name) {
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+             PreparedStatement st = connection.prepareStatement("DELETE FROM CLIENT WHERE NAME=?;")) {
+
+            st.setString(1, name);
+            st.execute();
+        } catch (SQLException e) {
+            System.err.println("Something went wrong when removing contact" + e);
         }
     }
 
-
-
     @Override
-    public void showAll() {
-        /*try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-             Statement st = connection.createStatement()) {
-            List<Contact> clients = new ArrayList<>();
-            try (ResultSet resultSet = st.executeQuery("SELECT * FROM CLIENT;")) {
-                while (resultSet.next()) {
-                    String name = resultSet.getString("name");
-                    String phoneNumber = resultSet.getString("phoneNumber");
-                    clients.add(new Contact(name, phoneNumber));
-                }
+    public List<Contact> showAll() {
+        final List<Contact> contacts = new ArrayList<>();
+
+        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+             Statement st = connection.createStatement();
+             ResultSet resultSet = st.executeQuery("SELECT * FROM CLIENT ORDER BY ID")) {
+
+            while (resultSet.next()){
+                final String name = resultSet.getString("NAME");
+                final String phoneNumber = resultSet.getString("PHONENUMBER");
+                final Integer age = resultSet.getInt("AGE");
+                contacts.add(new Contact(name, phoneNumber, age));
             }
-            return clients;
+        } catch (SQLException e) {
+            System.err.println("Something went wrong when selecting all clients " + e);
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }*/
-}
+        return contacts;
+    }
 }
 

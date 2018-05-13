@@ -2,6 +2,8 @@ package com.gladkov.javaphonebook.dao;
 
 import com.gladkov.javaphonebook.model.Contact;
 
+import java.util.List;
+
 public interface ContactDao {
 
     /**
@@ -9,11 +11,11 @@ public interface ContactDao {
      * (файловая система, БД и т.д.)
      */
 
-    void saveContact(String name, String phoneNumber);
+    void saveContact(Contact contact);
 
-    void removeContact(int id);
+    void removeContact(String Name);
 
-    void editContact(Contact contact);
+    void editContact(String oldName, Contact contact);
 
-    void showAll();
+    List<Contact> showAll();
 }
