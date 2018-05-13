@@ -6,8 +6,6 @@ import com.gladkov.javaphonebook.services.ContactService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.IOException;
-
 public class FSContactServiceImpl implements ContactService {
 
     /**
@@ -22,7 +20,7 @@ public class FSContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void createContact(String name, String phoneNumber) {
+    public void createContact(String name, String phoneNumber, int ageN) {
         contactDao.saveContact(name, phoneNumber);
     }
 

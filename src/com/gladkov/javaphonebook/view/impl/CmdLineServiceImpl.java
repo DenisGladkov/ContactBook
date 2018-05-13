@@ -24,8 +24,8 @@ public class CmdLineServiceImpl implements CmdLineService {
 
     @Override
     public void runMenu() throws IOException {
-        boolean exit = true;
-        while (exit) {
+        boolean isRunning = true;
+        while (isRunning) {
             showMenu();
             String line = br.readLine();
             switch (line) {
@@ -34,11 +34,11 @@ public class CmdLineServiceImpl implements CmdLineService {
                     break;
                 }
                 case "2": {
-                    removeContact();
+                    deleteContact();
                     break;
                 }
                 case "3": {
-                    showContacts();
+                    showAllContacts();
                     break;
                 }
                 case "4": {
@@ -46,7 +46,7 @@ public class CmdLineServiceImpl implements CmdLineService {
                     break;
                 }
                 case "0": {
-                    exit = false;
+                    isRunning = false;
                     break;
                 }
                 default:
@@ -58,7 +58,7 @@ public class CmdLineServiceImpl implements CmdLineService {
     private static void showMenu() {
         System.out.println("1. Create Contact");
         System.out.println("2. Delete Contact");
-        System.out.println("3. Show Contacts");
+        System.out.println("3. Show all Contacts");
         System.out.println("4. Edit Contact");
         System.out.println("0. Exit");
     }
@@ -67,60 +67,59 @@ public class CmdLineServiceImpl implements CmdLineService {
 
         System.out.println("Enter name");
         String name = br.readLine();
+        System.out.println("Enter phone number");
+        String phoneNumber = br.readLine();
+        System.out.println("Enter age");
+        //int age = Integer.parseInt(br.readLine());
+        int ageN = readInt();
 
-        System.out.println("Enter number of phone");
-        String phoneNumber= br.readLine();
-        contactService.createContact(name, phoneNumber);
+        this.contactService.createContact(name, phoneNumber, ageN);
     }
 
-    private void removeContact() {
-        try {
-            System.out.println("Enter ID");
-            String id = br.readLine();
-            if(id > 0) {
-                contactService.removeContact(id);
-            } else System.out.println("Wrong input!");
-        }
-        }
-        catch (NumberFormatException e) {
-            return -1;
-        }
+    private void deleteContact() throws IOException {
+        System.out.println("Enter surname in order to remove .");
+        String surname = br.readLine();
+        this.contactService.removeContact(surname);
     }
 
-    int id = readInt();
+    private void showAllContacts() {
+        System.out.println("The Contacts of the Phonebook are:");
+        this.contactService.showContacts();
 
 
-
-    private void showContacts() {
-        contactService.showContacts();
     }
+
 
     private void editContact() throws IOException {
 
-       /* System.out.println("Enter ID");
-        int id = readInt();
-        if(id > 0) {
-            String name = readName();
-            String phoneNumber = readPhoneNumber();
-            int age = readAge();
-            String address = readAddress();
+        System.out.println("Enter surname of modified contact");
+        String oldName = br.readLine();
 
-            if (!name.isEmpty() && !phoneNumber.isEmpty() && age >= MIN_AGE && age <= MAX_AGE ) {
-                contactService.editContact(id, name, age);
-            } else {
-                System.out.println("Wrong input!");
-            }
-        } else System.out.println("Wrong input!");
+        System.out.println("Enter new surname");
+        String newName = br.readLine();
+
+
+        System.out.println("Enter new phone");
+        String newPhoneNumber = br.readLine();
+
+        System.out.println("Enter new age");
+        int newAge = readInt();
+        //int newAge = Integer.parseInt(br.readLine());
+
+
+        this.contactService.editContact(oldName, newName, newPhoneNumber, newAge);
+
     }
 
     private int readInt() throws IOException {
         try {
+            // System.out.println("Input number!");
             String line = br.readLine();
             return ValidationUtil.checkNumber(line);
         } catch (NumberFormatException ex) {
             System.out.println("Wrong Input! You must input number");
             return readInt();
         }
-    }*/
-}
+    }
+
 }

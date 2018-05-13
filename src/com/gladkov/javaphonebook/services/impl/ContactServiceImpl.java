@@ -20,7 +20,7 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void createContact(String name, String phoneNumber) {
+    public void createContact(String name, String phoneNumber, int ageN) {
         contactList.add(new Contact(name, phoneNumber, age));
     }
 
