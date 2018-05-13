@@ -14,38 +14,84 @@ public class ContactServiceImpl implements ContactService {
 
     private final ObservableList<Contact> contactList;
 
-
     public ContactServiceImpl() {
         this.contactList = FXCollections.observableArrayList();
     }
 
     @Override
-    public void createContact(String name, String phoneNumber, int ageN) {
+    public void createContact(String name, String phoneNumber, int age) {
         contactList.add(new Contact(name, phoneNumber, age));
+
+//
+//        for (Map.Entry<String, Contact> element : contactList.entrySet()) {
+//            System.out.println(element.getKey());
+//            System.out.println(element.getValue());
+//
+//        }
     }
 
     @Override
-    public void removeContact(int id) {
-        contactList.remove(id);
+    public void removeContact(String name) {
+
     }
 
     @Override
-    public ObservableList<Contact> showContacts() {
+    public void showContacts() {
+
+    }
+
+
+    public ObservableList<Contact> showAllContacts() {
         return contactList;
+//        for (Contact contact : this.contactList.values()) {
+//            System.out.println(contact);
+//        }
     }
 
     @Override
-    public void editContact(int id, String name, String phoneNumber) {
-        /*for (Contact contact : contactList.v) {
-            if (contact.getId() == id){
-                contact.setName(name);
-                contact.setPhone(phoneNumber);
+    public void editContact(String oldName, String name, String phoneNumber, int Age) {
 
-                return;
-            }
-        }
-    }*/
-}
-}
+    }
+
+
+
+    public void deleteContact(String Name) {
+        // this.contactList.remove(Name);
+    }
+
+
+    }
+
+
+
+
+        // public void editContact(String oldSurname, String newSurname, String newName, String newPhoneNumber, int newAge) {
+
+//        Contact contact = this.contactList.get(oldSurname);
+//
+//        if (!newSurname.equals("")) {
+//            contact.setSurname(newSurname);
+//        }
+//        if (!newName.equals("")) {
+//            contact.setName(newName);
+//        }
+//        if (!newPhoneNumber.equals("")) {
+//            contact.setPhoneNumber(newPhoneNumber);
+//        }
+//        try {
+//            if (newAge != 0) {
+//                contact.setAge(newAge);
+//            }
+//        } catch (NumberFormatException e) {
+//            System.out.println(" Enter zero ");
+//        }
+//
+//
+//        contactList.remove(oldSurname);
+//        contactList.add(newSurname, contact);
+//    }
+
+
+
 
 

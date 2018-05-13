@@ -12,10 +12,10 @@ public class Contact {
     private String phoneNumber;
     private int age;
 
-    public Contact(String name, String phoneNumber, Integer age) {
+    public Contact(String name, String phoneNumber, int age) {
         this.name = name;
         this.phoneNumber = phoneNumber;
-        this.age= this.age;
+        this.age= age;
     }
 
     public String getName() {
@@ -38,9 +38,11 @@ public class Contact {
         this.phoneNumber = phoneNumber;
     }
 
+    public void setAge (int age){this.age=age;}
+
 
     @Override
     public String toString() {
-        return  name + ":" + age + ":" +phoneNumber;
+        return  name + ":" +  phoneNumber + ":" + age;
     }
 }

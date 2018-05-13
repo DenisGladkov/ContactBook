@@ -13,7 +13,7 @@ public interface ContactService {
 
     void removeContact(String name);
 
-    ObservableList<Contact> showContacts();
+   void showContacts();
 
     void editContact(String oldName, String name, String phoneNumber, int Age);
 

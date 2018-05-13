@@ -6,6 +6,8 @@ import com.gladkov.javaphonebook.services.ContactService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.util.List;
+
 public class FSContactServiceImpl implements ContactService {
 
     /**
@@ -21,25 +23,25 @@ public class FSContactServiceImpl implements ContactService {
 
     @Override
     public void createContact(String name, String phoneNumber, int ageN) {
-        contactDao.saveContact(name, phoneNumber);
+        contactDao.saveContact(new Contact(name, phoneNumber, ageN));
     }
 
     @Override
-    public void removeContact(int id) {
-        contactDao.removeContact(id);
+    public void removeContact(String Name) {
+        contactDao.removeContact(Name);
     }
 
     @Override
-    public ObservableList<Contact> showContacts() {
-        list.clear();
-        list.addAll(contactDao.showAll());
-        return list;
+    public void showContacts() {
+        final List<Contact> contacts = contactDao.showAll();
+        for (Contact contact : contacts) {
+            System.out.println(contact);
+        }
     }
 
-    public void editContact(int id, String name, String phoneNumber) {
-//		Contact contact = this.contactList.get(name);
-//		contact.setName(newName);
-//		contact.setAge(newAge);
+    @Override
+    public void editContact(String oldName, String newName, String newPhoneNumber, int newAge) {
+        Contact contact = new Contact(newName, newPhoneNumber, newAge);
+        contactDao.editContact(oldName, contact);
     }
-
 }

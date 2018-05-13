@@ -2,6 +2,7 @@ package com.gladkov.javaphonebook.dao.impl;
 
 import com.gladkov.javaphonebook.dao.ContactDao;
 import com.gladkov.javaphonebook.model.Contact;
+import org.h2.tools.DeleteDbFiles;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,11 +17,11 @@ public class DBContactDao implements ContactDao {
     private int counter = 0;
 
     public DBContactDao() {
-        //DeleteDbFiles.execute("~", "test", true);
+
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              Statement st = connection.createStatement()) {
-            st.execute("CREATE TABLE CLIENT(ID INT PRIMARY KEY AUTO_INCREMENT,\n" +
-                    "   SURNAME VARCHAR(255),NAME VARCHAR(255),PHONENUMBER VARCHAR(255),AGE INTEGER);");
+            st.execute("CREATE TABLE CONTACTBOOK(ID INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                    "   NAME VARCHAR(255),PHONENUMBER VARCHAR(255),AGE INTEGER);");
         } catch (SQLException e) {
             System.err.println("Something went wrong while initialisation " + e);
         }
@@ -29,7 +30,7 @@ public class DBContactDao implements ContactDao {
     @Override
     public void saveContact(Contact contact) {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-             PreparedStatement st = connection.prepareStatement("INSERT INTO CLIENT VALUES(?, ?, ?);")) {
+             PreparedStatement st = connection.prepareStatement("INSERT INTO CONTACTBOOK VALUES(?, ?, ?, ?);")) {
 
             st.setInt(1, counter++);
             st.setString(2, contact.getName());
@@ -47,7 +48,7 @@ public class DBContactDao implements ContactDao {
     public void editContact(String oldName, Contact contact) {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              PreparedStatement st = connection
-                     .prepareStatement("UPDATE CLIENT SET NAME=?, PHONENUMBER=?, AGE=? WHERE NAME=?")) {
+                     .prepareStatement("UPDATE CONTACTBOOK SET NAME=?, PHONENUMBER=?, AGE=? WHERE NAME=?")) {
 
             st.setString(1, contact.getName());
             st.setString(2, contact.getPhone());
@@ -64,7 +65,7 @@ public class DBContactDao implements ContactDao {
     @Override
     public void removeContact(String name) {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-             PreparedStatement st = connection.prepareStatement("DELETE FROM CLIENT WHERE NAME=?;")) {
+             PreparedStatement st = connection.prepareStatement("DELETE FROM CONTACTBOOK WHERE NAME=?;")) {
 
             st.setString(1, name);
             st.execute();
@@ -79,7 +80,7 @@ public class DBContactDao implements ContactDao {
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              Statement st = connection.createStatement();
-             ResultSet resultSet = st.executeQuery("SELECT * FROM CLIENT ORDER BY ID")) {
+             ResultSet resultSet = st.executeQuery("SELECT * FROM CONTACTBOOK ORDER BY ID")) {
 
             while (resultSet.next()){
                 final String name = resultSet.getString("NAME");

@@ -92,10 +92,10 @@ public class CmdLineServiceImpl implements CmdLineService {
 
     private void editContact() throws IOException {
 
-        System.out.println("Enter surname of modified contact");
+        System.out.println("Enter name of modified contact");
         String oldName = br.readLine();
 
-        System.out.println("Enter new surname");
+        System.out.println("Enter new name");
         String newName = br.readLine();
 
 
