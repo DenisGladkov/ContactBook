@@ -70,25 +70,23 @@ public class CmdLineServiceImpl implements CmdLineService {
         System.out.println("Enter phone number");
         String phoneNumber = br.readLine();
         System.out.println("Enter age");
-        //int age = Integer.parseInt(br.readLine());
         int ageN = readInt();
 
         this.contactService.createContact(name, phoneNumber, ageN);
     }
 
     private void deleteContact() throws IOException {
-        System.out.println("Enter surname in order to remove .");
+        System.out.println("Enter name in order to remove .");
         String surname = br.readLine();
         this.contactService.removeContact(surname);
     }
 
     private void showAllContacts() {
-        System.out.println("The Contacts of the Phonebook are:");
+        System.out.println("The Contacts of the Phone book are:");
         this.contactService.showContacts();
 
 
     }
-
 
     private void editContact() throws IOException {
 
@@ -98,14 +96,11 @@ public class CmdLineServiceImpl implements CmdLineService {
         System.out.println("Enter new name");
         String newName = br.readLine();
 
-
         System.out.println("Enter new phone");
         String newPhoneNumber = br.readLine();
 
         System.out.println("Enter new age");
         int newAge = readInt();
-        //int newAge = Integer.parseInt(br.readLine());
-
 
         this.contactService.editContact(oldName, newName, newPhoneNumber, newAge);
 
@@ -113,7 +108,6 @@ public class CmdLineServiceImpl implements CmdLineService {
 
     private int readInt() throws IOException {
         try {
-            // System.out.println("Input number!");
             String line = br.readLine();
             return ValidationUtil.checkNumber(line);
         } catch (NumberFormatException ex) {

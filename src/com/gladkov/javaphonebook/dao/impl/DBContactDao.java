@@ -8,6 +8,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.jar.Pack200.Packer.PASS;
+
 public class DBContactDao implements ContactDao {
 
     private static final String DB_URL = "jdbc:h2:tcp://localhost/~/ContactBook";
@@ -20,28 +22,31 @@ public class DBContactDao implements ContactDao {
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              Statement st = connection.createStatement()) {
-            st.execute("CREATE TABLE CONTACTBOOK(ID INT PRIMARY KEY AUTO_INCREMENT,\n" +
-                    "   NAME VARCHAR(255),PHONENUMBER VARCHAR(255),AGE INTEGER);");
+            st.execute("CREATE TABLE IF NOT EXISTS CONTACTBOOK (" +
+                    "ID INT PRIMARY KEY AUTO_INCREMENT,\n" +
+                    "NAME VARCHAR(255)," +
+                    "PHONENUMBER VARCHAR(255)," +
+                    "AGE INTEGER);");
         } catch (SQLException e) {
             System.err.println("Something went wrong while initialisation " + e);
         }
     }
 
     @Override
-    public void saveContact(Contact contact) {
-        try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
-             PreparedStatement st = connection.prepareStatement("INSERT INTO CONTACTBOOK VALUES(?, ?, ?, ?);")) {
+    public void saveContact(Contact contact ) {
+        try (Connection connection = DriverManager
+                .getConnection(DB_URL, USER, PASSWORD);
+             PreparedStatement st =
+                     connection.prepareStatement("INSERT INTO CONTACTBOOK VALUES( default, ?, ?, ?);")){
 
-            st.setInt(1, counter++);
-            st.setString(2, contact.getName());
-            st.setString(3, contact.getPhone());
-            st.setInt(4, contact.getAge());
+            st.setString(1, contact.getName());
+            st.setString(2, contact.getPhone());
+            st.setInt(3, contact.getAge());
 
             st.execute();
         } catch (SQLException e) {
-            System.err.println("Something went wrong when saving contact " + e);
+            System.out.println("boroda");
         }
-
     }
 
     @Override
@@ -93,5 +98,8 @@ public class DBContactDao implements ContactDao {
         }
         return contacts;
     }
+
+
+
 }
 
