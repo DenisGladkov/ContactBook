@@ -16,8 +16,6 @@ public class DBContactDao implements ContactDao {
     private static final String USER = "Test";
     private static final String PASSWORD = "";
 
-    private int counter = 0;
-
     public DBContactDao() {
 
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
@@ -25,10 +23,10 @@ public class DBContactDao implements ContactDao {
             st.execute("CREATE TABLE IF NOT EXISTS CONTACTBOOK (" +
                     "ID INT PRIMARY KEY AUTO_INCREMENT,\n" +
                     "NAME VARCHAR(255)," +
-                    "PHONENUMBER VARCHAR(255)," +
+                    "PHONE_NUMBER VARCHAR(255)," +
                     "AGE INTEGER);");
         } catch (SQLException e) {
-            System.err.println("Something went wrong while initialisation " + e);
+            System.out.println("Something went wrong while initialisation " + e);
         }
     }
 
@@ -53,7 +51,7 @@ public class DBContactDao implements ContactDao {
     public void editContact(String oldName, Contact contact) {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
              PreparedStatement st = connection
-                     .prepareStatement("UPDATE CONTACTBOOK SET NAME=?, PHONENUMBER=?, AGE=? WHERE NAME=?")) {
+                     .prepareStatement("UPDATE CONTACTBOOK SET NAME=?, PHONE_NUMBER=?, AGE=? WHERE NAME=?")) {
 
             st.setString(1, contact.getName());
             st.setString(2, contact.getPhone());
@@ -62,7 +60,7 @@ public class DBContactDao implements ContactDao {
 
             st.execute();
         } catch (SQLException e) {
-            System.err.println("Something went wrong when updating contact " + e);
+            System.out.println("Something went wrong when updating contact " + e);
         }
 
     }
@@ -75,7 +73,7 @@ public class DBContactDao implements ContactDao {
             st.setString(1, name);
             st.execute();
         } catch (SQLException e) {
-            System.err.println("Something went wrong when removing contact" + e);
+            System.out.println("Something went wrong when removing contact" + e);
         }
     }
 
@@ -89,12 +87,12 @@ public class DBContactDao implements ContactDao {
 
             while (resultSet.next()){
                 final String name = resultSet.getString("NAME");
-                final String phoneNumber = resultSet.getString("PHONENUMBER");
+                final String phoneNumber = resultSet.getString("PHONE_NUMBER");
                 final Integer age = resultSet.getInt("AGE");
                 contacts.add(new Contact(name, phoneNumber, age));
             }
         } catch (SQLException e) {
-            System.err.println("Something went wrong when selecting all clients " + e);
+            System.out.println("Something went wrong when selecting all clients " + e);
         }
         return contacts;
     }
