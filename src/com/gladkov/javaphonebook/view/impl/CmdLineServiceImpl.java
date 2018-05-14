@@ -76,13 +76,13 @@ public class CmdLineServiceImpl implements CmdLineService {
     }
 
     private void deleteContact() throws IOException {
-        System.out.println("Enter name in order to remove .");
+        System.out.println("Enter name to remove .");
         String surname = br.readLine();
         this.contactService.removeContact(surname);
     }
 
     private void showAllContacts() {
-        System.out.println("The Contacts of the Phone book are:");
+        System.out.println("The Contacts of the book are:");
         this.contactService.showContacts();
 
 
