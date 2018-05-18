@@ -5,6 +5,7 @@ import java.io.IOException;
 import com.gladkov.javaphonebook.dao.ContactDao;
 import com.gladkov.javaphonebook.dao.impl.DBContactDao;
 import com.gladkov.javaphonebook.dao.impl.FileSystemContactDaoImpl;
+import com.gladkov.javaphonebook.model.Contact;
 import com.gladkov.javaphonebook.services.ContactService;
 import com.gladkov.javaphonebook.services.impl.ContactServiceImpl;
 import com.gladkov.javaphonebook.services.impl.FSContactServiceImpl;
@@ -19,10 +20,14 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
+        /*
         ContactDao contactDao = new DBContactDao();
-
         ContactService contactService = new FSContactServiceImpl(contactDao);
+        CmdLineService cmd = new CmdLineServiceImpl(contactService);
+        */
 
+        ContactDao contactDao = new FileSystemContactDaoImpl();
+        ContactService contactService = new ContactServiceImpl(contactDao);
         CmdLineService cmd = new CmdLineServiceImpl(contactService);
 
         cmd.runMenu();

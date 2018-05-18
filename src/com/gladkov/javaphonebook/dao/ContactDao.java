@@ -14,6 +14,7 @@ public interface ContactDao {
     void saveContact(Contact contact);
 
     void removeContact(String Name);
+    void deleteContact(int id);
 
     void editContact(String oldName, Contact contact);
 
