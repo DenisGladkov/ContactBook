@@ -2,6 +2,7 @@ package com.gladkov.javaphonebook.dao.impl;
 
 import com.gladkov.javaphonebook.dao.ContactDao;
 import com.gladkov.javaphonebook.model.Contact;
+import javafx.collections.ObservableList;
 import org.h2.tools.DeleteDbFiles;
 
 import java.sql.*;
@@ -97,6 +98,10 @@ public class DBContactDao implements ContactDao {
         return contacts;
     }
 
+    @Override
+    public ObservableList<Contact> showContacts() {
+        return null;
+    }
 
 
 }

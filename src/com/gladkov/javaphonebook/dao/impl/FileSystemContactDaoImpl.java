@@ -2,6 +2,7 @@ package com.gladkov.javaphonebook.dao.impl;
 
 import com.gladkov.javaphonebook.dao.ContactDao;
 import com.gladkov.javaphonebook.model.Contact;
+import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -14,96 +15,103 @@ public abstract class FileSystemContactDaoImpl implements ContactDao {
      */
 
     private static final File FILE = new File("data");
-    private ArrayList<Contact> contactList = new ArrayList<Contact>();
+    private List<Contact> list;
+    
 
-    public FileSystemContactDaoImpl() {
+    /*public FileSystemContactDaoImpl()  {
         if (!FILE.exists()) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(FILE))){
-                String line;
-                while ((line = reader.readLine()) != null)
-            writeCollectionToFile();
+            System.out.println("boroda");
         }
+
+    }*/
+    public FileSystemContactDaoImpl() {
     }
 
 
-    //TODO исправить логику так, что бы файл не пересоздавался а дополнялся.
-    @Override
-    public void saveContact(Contact contact) {
-        try(PrintStream printStream = new PrintStream(new FileOutputStream(FILE, true), true)) {
-            printStream.println(contact);
-            printStream.println(contact);
-            printStream.flush();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteContact(int id) {
-        if (!contactList.isEmpty()) contactList.clear();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE))){
-            String line;
-            while ((line = reader.readLine()) != null) {String[] str = line.split(":");
-
-                String name = str[1];
-                String phoneNumber = str[2];
-                int age = Integer.valueOf(str[3]);
-
-                contactList.add( new Contact(name, phoneNumber, age));};
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        int index = findIndexOfElement(id);
-        if (index > -1 ) contactList.remove(index);
-
-        if (FILE.delete()) {
-            try(PrintStream printStream = new PrintStream(new FileOutputStream(FILE, true), true)) {
-                for (Contact contact: contactList) {
-                    printStream.println(contact);
-                }
+        //TODO исправить логику так, что бы файл не пересоздавался а дополнялся.
+        @Override
+       /* public void saveContact (Contact contact){
+            try (PrintStream printStream = new PrintStream(new FileOutputStream(FILE, true), true)) {
+                printStream.println(contact);
+                printStream.println(contact);
+                printStream.flush();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private int findIndexOfElement(long id){
-        for (int i = 0; i < contactList.size(); i++ ) {
-            if (contactList.get(i).getId() == id) {
-                return i;
+        }*/
+        public void saveContact(Contact contact) {
+            try (PrintWriter writer = new PrintWriter(
+                    new BufferedWriter(new FileWriter(FILE)))) {
+                writer.println(contact);
+                writer.flush();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        return -1;
+
+    public void removeContact(String lineToRemove) {
+
+        try {
+
+            File inFile = new File(String.valueOf(FILE));
+
+            if (!inFile.isFile()) {
+                System.out.println("Parameter is not an existing file");
+                return;
+            }
+
+            //Construct the new file that will later be renamed to the original filename.
+            File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+
+            BufferedReader br = new BufferedReader(new FileReader(FILE));
+            PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
+            String line = null;
+
+            //Read from the original file and write to the new
+            //unless content matches data to be removed.
+            while ((line = br.readLine()) != null) {
+
+                if (!line.trim().equals(lineToRemove)) {
+
+                    pw.println(line);
+                    pw.flush();
+                }
+            }
+            pw.close();
+            br.close();
+
+            //Delete the original file
+            if (!inFile.delete()) {
+                System.out.println("Could not delete file");
+                return;
+            }
+
+            //Rename the new file to the filename the original file had.
+            if (!tempFile.renameTo(inFile))
+                System.out.println("Could not rename file");
+
+        }
+        catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
-
-    public void editContact(Contact contact) {
-
-    }
-
-
-    @Override
-    public ArrayList<Contact> selectAllContact() {
-        if (!contactList.isEmpty()) contactList.clear();
-        {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE))){
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] str = line.split(":");
-
-                long id = Long.valueOf(str[0]);
-                String name = str[1];
-                String phoneNumber = str[2];
-                int age = Integer.valueOf(str[3]);
-                String address = str[4];
-
-                contactList.add( new Contact(name, phoneNumber, age));
+        public List<Contact> showAll () {
+            try (BufferedReader reader = new BufferedReader(new FileReader(FILE))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    System.out.println(line);
+                }
+                return new ArrayList<>();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
             }
         }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        return contactList;
+
+
     }
-}

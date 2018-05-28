@@ -11,6 +11,7 @@ import com.gladkov.javaphonebook.services.impl.ContactServiceImpl;
 import com.gladkov.javaphonebook.services.impl.FSContactServiceImpl;
 import com.gladkov.javaphonebook.view.CmdLineService;
 import com.gladkov.javaphonebook.view.impl.CmdLineServiceImpl;
+import javafx.collections.ObservableList;
 
 public class App {
 
@@ -26,10 +27,19 @@ public class App {
         CmdLineService cmd = new CmdLineServiceImpl(contactService);
         */
 
-        ContactDao contactDao = new FileSystemContactDaoImpl();
+        ContactDao contactDao = new FileSystemContactDaoImpl() {
+            @Override
+            public void editContact(String oldName, Contact contact) {
+
+            }
+
+            @Override
+            public ObservableList<Contact> showContacts() {
+                return null;
+            }
+        };
         ContactService contactService = new ContactServiceImpl(contactDao);
         CmdLineService cmd = new CmdLineServiceImpl(contactService);
-
         cmd.runMenu();
     }
 }

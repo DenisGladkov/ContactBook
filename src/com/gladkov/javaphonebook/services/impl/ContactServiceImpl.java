@@ -1,10 +1,13 @@
 package com.gladkov.javaphonebook.services.impl;
 
 
+import com.gladkov.javaphonebook.dao.ContactDao;
 import com.gladkov.javaphonebook.model.Contact;
 import com.gladkov.javaphonebook.services.ContactService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.HashMap;
 
 public class ContactServiceImpl implements ContactService {
 
@@ -12,22 +15,18 @@ public class ContactServiceImpl implements ContactService {
      * Реализация ContactService которая использует Map для хранения данных.
      */
 
+ContactDao contactDao;
     private final ObservableList<Contact> contactList;
+
 
     public ContactServiceImpl() {
         this.contactList = FXCollections.observableArrayList();
     }
 
     @Override
-    public void createContact(String name, String phoneNumber, int age) {
-        contactList.add(new Contact(name, phoneNumber, age));
+    public void createContact(String name, String phoneNumber, int ageN) {
 
-//
-//        for (Map.Entry<String, Contact> element : contactList.entrySet()) {
-//            System.out.println(element.getKey());
-//            System.out.println(element.getValue());
-//
-//        }
+        contactList.add( new Contact( name, phoneNumber, ageN ) );
     }
 
     @Override

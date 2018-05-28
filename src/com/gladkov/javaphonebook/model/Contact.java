@@ -11,13 +11,13 @@ public class Contact {
     private String name;
     private String phoneNumber;
     private int age;
-    private int id;
 
-    public Contact(String name, String phoneNumber, int age, int id) {
+
+    public Contact(String name, String phoneNumber, int age) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.age= age;
-        this.id=id;
+
     }
 
     public String getName() {
@@ -32,9 +32,6 @@ public class Contact {
         return age;
     }
 
-    public int getId() {
-        return id;
-    }
 
     public void setName(String name) {
         this.name = name;
