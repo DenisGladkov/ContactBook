@@ -19,7 +19,7 @@ public class App {
      * Начало программы. Тут запускается программа, создаются все сервиса и устанавливаются связи между ними.
      */
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 
         /*
         ContactDao contactDao = new DBContactDao();
@@ -27,7 +27,7 @@ public class App {
         CmdLineService cmd = new CmdLineServiceImpl(contactService);
         */
 
-        ContactDao contactDao = new FileSystemContactDaoImpl() {
+        ContactDao contactDao = new FileSystemContactDaoImpl(){
             @Override
             public void editContact(String oldName, Contact contact) {
 

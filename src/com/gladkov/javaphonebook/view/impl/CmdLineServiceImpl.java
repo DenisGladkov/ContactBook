@@ -4,6 +4,8 @@ import com.gladkov.javaphonebook.model.Contact;
 import com.gladkov.javaphonebook.services.ContactService;
 import com.gladkov.javaphonebook.util.ValidationUtil;
 import com.gladkov.javaphonebook.view.CmdLineService;
+import javafx.collections.ObservableList;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,7 +25,7 @@ public class CmdLineServiceImpl implements CmdLineService {
     }
 
     @Override
-    public void runMenu() throws IOException {
+    public void runMenu() throws Exception {
         boolean isRunning = true;
         while (isRunning) {
             showMenu();
@@ -63,7 +65,7 @@ public class CmdLineServiceImpl implements CmdLineService {
         System.out.println("0. Exit");
     }
 
-    private void createContact() throws IOException {
+    private void createContact() throws Exception {
 
         System.out.println("Enter name");
         String name = br.readLine();
@@ -82,8 +84,10 @@ public class CmdLineServiceImpl implements CmdLineService {
     }
 
     private void showAllContacts() {
-        System.out.println("The Contacts of the book are:");
-        this.contactService.showContacts();
+         System.out.println("The Contacts of the book are:");
+//        this.contactService.showContacts();
+        ObservableList<Contact> contacts = this.contactService.showAllContacts();
+        System.out.println(contacts);
 
 
     }

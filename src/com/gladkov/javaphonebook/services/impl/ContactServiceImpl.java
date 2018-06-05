@@ -19,7 +19,7 @@ ContactDao contactDao;
     private final ObservableList<Contact> contactList;
 
 
-    public ContactServiceImpl() {
+    public ContactServiceImpl(ContactDao contactDao) {
         this.contactList = FXCollections.observableArrayList();
     }
 

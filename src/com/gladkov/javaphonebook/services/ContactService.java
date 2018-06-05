@@ -12,11 +12,11 @@ public interface ContactService {
      */
 
 
-    void createContact(String name, String phoneNumber, int ageN);
+    void createContact(String name, String phoneNumber, int ageN) throws Exception;
 
     void removeContact(String name);
 
-   void showContacts();
+    ObservableList<Contact> showAllContacts();
 
     void editContact(String oldName, String name, String phoneNumber, int Age);
 
